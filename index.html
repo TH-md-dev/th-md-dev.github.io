@@ -189,7 +189,7 @@
                     <button class="tab-button active" onclick="switchTab('recipient')">收件人</button>
                     <button class="tab-button" onclick="switchTab('message')">祝賀詞</button>
                     <button class="tab-button" onclick="switchTab('sender')">寄件人</button>
-                    <button class="tab-button" onclick="switchTab('Other')">其他</button>
+                    <button class="tab-button" onclick="switchTab('other')">其他</button>
                 </div>
 
                 <div id="recipientControls">
@@ -214,6 +214,7 @@
                     </div>
                 </div>
 
+                
                 <div id="messageControls">
                     <div class="form-group">
                         <label>祝賀詞</label>
@@ -235,6 +236,7 @@
                         <input type="range" id="messageY" min="0" max="2000" value="300" oninput="updateSliderValue(this, 'messageYValue'); updateCard();">
                     </div>
                 </div>
+
                 
                 <div id="senderControls">
                     <div class="form-group">
@@ -257,25 +259,23 @@
                         <input type="range" id="senderY" min="0" max="2000" value="500" oninput="updateSliderValue(this, 'senderYValue'); updateCard();">
                     </div>
                 </div>
+                
 
-                <div id="OtherControls">
+                <div id="otherControls">
                     <div class="form-group">
                         <label>添加寄件人照片</label>
                         <input type="file" id="senderImage" accept="image/*" onchange="loadSenderImage()">
                         <img id="senderImagePreview">
                     </div>
 
-                    <div class="form-group">
+                    <div class="image-shape-control">
                         <label>照片形狀</label>
-
-                        <div class="image-shape-control">
-                            <input type="radio" id="squareShape" name="imageShape" value="square" checked="" onchange="updateCard()">
-                            <label for="squareShape">方形</label>
-                            <input type="radio" id="circleShape" name="imageShape" value="circle" onchange="updateCard()">
-                            <label for="circleShape">圓形</label>
-                        </div>
+                        <input type="radio" id="squareShape" name="imageShape" value="square" checked="" onchange="updateCard()">
+                        <label for="squareShape">方形</label>
+                        <input type="radio" id="circleShape" name="imageShape" value="circle" onchange="updateCard()">
+                        <label for="circleShape">圓形</label>
                     </div>
-
+                    
                     <div class="form-group">
                         <label>照片大小: <span id="imageSizeValue">100</span>px</label>
                         <input type="range" id="imageSize" min="50" max="300" value="100" oninput="updateSliderValue(this, 'imageSizeValue'); updateCard();">
@@ -301,11 +301,10 @@
                     </select>
                 </div>
 
-                    <div class="form-group">
-                    <label>文字粗體</label>
-                    <input type="checkbox" id="boldText" onchange="updateCard()">
-                </div>
-
+                <div class="form-group">
+                        <label>文字粗體</label>
+                        <input type="checkbox" id="boldText" onchange="updateCard()">
+                </div>   
                 
                 <button class="btn" onclick="downloadJPG()">下載 JPG</button>
                 <button class="btn" onclick="downloadPDF()">下載 PDF</button>
