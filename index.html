@@ -338,22 +338,22 @@
                 document.getElementById('otherControls').style.display = 'none';
 
             if (tab === 'message') {
-                document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('messageControls').style.display = 'block';
+                document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('senderControls').style.display = 'none';
                 document.getElementById('otherControls').style.display = 'none';
                 
             if (tab === 'sender') {
+                document.getElementById('senderControls').style.display = 'block';
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('messageControls').style.display = 'none';
-                document.getElementById('senderControls').style.display = 'block';
                 document.getElementById('otherControls').style.display = 'none';
                 
             } else {
+                document.getElementById('otherControls').style.display = 'block';
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('messageControls').style.display = 'none';
                 document.getElementById('senderControls').style.display = 'none';
-                document.getElementById('otherControls').style.display = 'block';
             }
         }
 
