@@ -128,7 +128,7 @@
         }
 
         .position-controls > div {
-            flex: 4;
+            flex: 1;
         }
 
         #senderImagePreview {
@@ -338,19 +338,19 @@
                 document.getElementById('otherControls').style.display = 'none';
 
             if (tab === 'message') {
-                document.getElementById('messageControls').style.display = 'active';
+                document.getElementById('messageControls').style.display = 'block';
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('senderControls').style.display = 'none';
                 document.getElementById('otherControls').style.display = 'none';
                 
             if (tab === 'sender') {
-                document.getElementById('senderControls').style.display = 'active';
+                document.getElementById('senderControls').style.display = 'block;
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('messageControls').style.display = 'none';
                 document.getElementById('otherControls').style.display = 'none';
                 
             } else {
-                document.getElementById('otherControls').style.display = 'active';
+                document.getElementById('otherControls').style.display = 'block';
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('messageControls').style.display = 'none';
                 document.getElementById('senderControls').style.display = 'none';
@@ -415,35 +415,6 @@
             ctx.fillStyle = document.getElementById('recipientColor').value;
             ctx.fillText(recipient, recipientX, recipientY);
 
-            };
-        }
-        function useTemplate(type) {
-            const templates = messageTemplates[type];
-            const randomIndex = Math.floor(Math.random() * templates.length);
-            const messageArea = document.getElementById('message');
-            messageArea.value = templates[randomIndex];
-            updateMessagePreview();
-            updateCard();
-        }
-        
-        }
-        function updateMessagePreview() {
-            const message = document.getElementById('message').value;
-            const preview = document.getElementById('messagePreview');
-            preview.innerHTML = message.replace(/\n/g, '<br>');
-        }
-
-        
-        }
-        function updateCard() {
-            
-            const message = document.getElementById('message').value;
-            ctx.fillStyle = document.getElementById('messageColor').value;
-            const messageX = parseInt(document.getElementById('messageX').value);
-            let messageY = parseInt(document.getElementById('messageY').value);
-            }
-    
-        }
             const sender = document.getElementById('sender').value;
             const senderX = parseInt(document.getElementById('senderX').value);
             const senderY = parseInt(document.getElementById('senderY').value);
@@ -461,8 +432,17 @@
                 } else {
                     ctx.drawImage(senderImg, imgX, imgY, size, size);
                 }
-        }
-       
+            }
+      }
+        function updateMessagePreview() {
+            const message = document.getElementById('message').value;
+            const preview = document.getElementById('messagePreview');
+            preview.innerHTML = message.replace(/\n/g, '<br>');
+            
+            ctx.fillStyle = document.getElementById('messageColor').value;
+            const messageX = parseInt(document.getElementById('messageX').value);
+            let messageY = parseInt(document.getElementById('messageY').value);
+        
         }
         function downloadJPG() {
             const link = document.createElement('a');
