@@ -338,19 +338,19 @@
                 document.getElementById('otherControls').style.display = 'none';
 
             if (tab === 'message') {
-                document.getElementById('messageControls').style.display = 'block';
+                document.getElementById('messageControls').style.display = 'active';
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('senderControls').style.display = 'none';
                 document.getElementById('otherControls').style.display = 'none';
                 
             if (tab === 'sender') {
-                document.getElementById('senderControls').style.display = 'block';
+                document.getElementById('senderControls').style.display = 'active';
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('messageControls').style.display = 'none';
                 document.getElementById('otherControls').style.display = 'none';
                 
             } else {
-                document.getElementById('otherControls').style.display = 'block';
+                document.getElementById('otherControls').style.display = 'active';
                 document.getElementById('recipientControls').style.display = 'none';
                 document.getElementById('messageControls').style.display = 'none';
                 document.getElementById('senderControls').style.display = 'none';
@@ -416,7 +416,7 @@
             ctx.fillText(recipient, recipientX, recipientY);
 
             };
-
+        }
         function useTemplate(type) {
             const templates = messageTemplates[type];
             const randomIndex = Math.floor(Math.random() * templates.length);
@@ -425,7 +425,8 @@
             updateMessagePreview();
             updateCard();
         }
-
+        
+        }
         function updateMessagePreview() {
             const message = document.getElementById('message').value;
             const preview = document.getElementById('messagePreview');
