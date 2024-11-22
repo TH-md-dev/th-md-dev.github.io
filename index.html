@@ -258,10 +258,7 @@
                         <label>位置 (上下): <span id="senderYValue">500</span></label>
                         <input type="range" id="senderY" min="0" max="2000" value="500" oninput="updateSliderValue(this, 'senderYValue'); updateCard();">
                     </div>
-                </div>
-                
 
-                <div id="otherControls">
                     <div class="form-group">
                         <label>添加寄件人照片</label>
                         <input type="file" id="senderImage" accept="image/*" onchange="loadSenderImage()">
@@ -339,9 +336,9 @@
             document.getElementById('senderControls').style.display = 'none';
             
             document.getElementById(`${tab}Controls`).style.display = 'block';
-        }
-        
-
+            }
+         }
+          }
         }
 
         function loadCardImage() {
@@ -431,14 +428,16 @@
             let messageY = parseInt(document.getElementById('messageY').value);
     } 
         }
+            }
+        }
+
         function downloadJPG() {
             const link = document.createElement('a');
-            link.download = 'Greeting_Card.jpg';
+            link.download = '賀卡.jpg';
             link.href = canvas.toDataURL('image/jpeg', 1.0);
             link.click();
         }
 
-        }
         function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
@@ -448,9 +447,8 @@
             });
             
             pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, canvas.width, canvas.height);
-            pdf.save('Greeting_Card.pdf');
+            pdf.save('賀卡.pdf');
         }
     </script>
-
-
-</body></html>
+</body>
+</html>
