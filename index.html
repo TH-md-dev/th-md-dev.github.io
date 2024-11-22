@@ -189,7 +189,6 @@
                     <button class="tab-button active" onclick="switchTab('recipient')">收件人</button>
                     <button class="tab-button" onclick="switchTab('message')">祝賀詞</button>
                     <button class="tab-button" onclick="switchTab('sender')">寄件人</button>
-                    <button class="tab-button" onclick="switchTab('other')">其他</button>
                 </div>
 
                 <div id="recipientControls">
@@ -215,7 +214,7 @@
                 </div>
 
                 
-                <div id="messageControls">
+                <div id="messageControls" style="display: none;>
                     <div class="form-group">
                         <label>祝賀詞</label>
                         <textarea id="message" onchange="updateCard()" placeholder="輸入您的祝福語..."></textarea>
@@ -238,7 +237,7 @@
                 </div>
 
                 
-                <div id="senderControls">
+                <div id="senderControls" style="display: none;>
                     <div class="form-group">
                         <label>寄件人名稱</label>
                         <input type="text" id="sender" onchange="updateCard()">
