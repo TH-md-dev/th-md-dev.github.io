@@ -183,7 +183,7 @@
                 <div class="form-group">
                     <label>上傳賀卡背景</label>
                     <input type="file" id="cardImage" accept="image/jpeg,image/jpg" onchange="loadCardImage()">
-                </div>
+        </div>
 
                 <div class="tab-container">
                     <button class="tab-button active" onclick="switchTab('recipient')">收件人</button>
@@ -322,7 +322,7 @@
         function updateSliderValue(slider, valueId) {
             document.getElementById(valueId).textContent = slider.value;
         }
-
+        
         function switchTab(tab) {
             document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
             document.querySelector(`button[onclick="switchTab('${tab}')"]`).classList.add('active');
@@ -336,10 +336,7 @@
             
             document.getElementById(`${tab}Controls`).style.display = 'block';
             }
-         }
-          }
-        }
-
+        } 
         function loadCardImage() {
             const file = document.getElementById('cardImage').files[0];
             if (file) {
@@ -416,7 +413,8 @@
                     ctx.drawImage(senderImg, imgX, imgY, size, size);
                 }
             }
-    }
+        }
+        
         function updateMessagePreview() {
             const message = document.getElementById('message').value;
             const preview = document.getElementById('messagePreview');
@@ -425,9 +423,9 @@
             ctx.fillStyle = document.getElementById('messageColor').value;
             const messageX = parseInt(document.getElementById('messageX').value);
             let messageY = parseInt(document.getElementById('messageY').value);
-    } 
+            } 
         }
-            }
+            
         }
 
         function downloadJPG() {
