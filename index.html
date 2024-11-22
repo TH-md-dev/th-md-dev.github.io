@@ -331,30 +331,17 @@
             document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
             document.querySelector(`button[onclick="switchTab('${tab}')"]`).classList.add('active');
             
-            if (tab === 'recipient') {
-                document.getElementById('recipientControls').style.display = 'block';
-                document.getElementById('messageControls').style.display = 'none';
-                document.getElementById('senderControls').style.display = 'none';
-                document.getElementById('otherControls').style.display = 'none';
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+            document.querySelector(`button[onclick="switchTab('${tab}')"]`).classList.add('active');
+            
+            document.getElementById('recipientControls').style.display = 'none';
+            document.getElementById('messageControls').style.display = 'none';
+            document.getElementById('senderControls').style.display = 'none';
+            
+            document.getElementById(`${tab}Controls`).style.display = 'block';
+        }
+        
 
-            if (tab === 'message') {
-                document.getElementById('messageControls').style.display = 'block';
-                document.getElementById('recipientControls').style.display = 'none';
-                document.getElementById('senderControls').style.display = 'none';
-                document.getElementById('otherControls').style.display = 'none';
-                
-            if (tab === 'sender') {
-                document.getElementById('senderControls').style.display = 'block;
-                document.getElementById('recipientControls').style.display = 'none';
-                document.getElementById('messageControls').style.display = 'none';
-                document.getElementById('otherControls').style.display = 'none';
-                
-            } else {
-                document.getElementById('otherControls').style.display = 'block';
-                document.getElementById('recipientControls').style.display = 'none';
-                document.getElementById('messageControls').style.display = 'none';
-                document.getElementById('senderControls').style.display = 'none';
-            }
         }
 
         function loadCardImage() {
@@ -433,7 +420,7 @@
                     ctx.drawImage(senderImg, imgX, imgY, size, size);
                 }
             }
-      }
+    }
         function updateMessagePreview() {
             const message = document.getElementById('message').value;
             const preview = document.getElementById('messagePreview');
@@ -442,7 +429,7 @@
             ctx.fillStyle = document.getElementById('messageColor').value;
             const messageX = parseInt(document.getElementById('messageX').value);
             let messageY = parseInt(document.getElementById('messageY').value);
-        
+    } 
         }
         function downloadJPG() {
             const link = document.createElement('a');
