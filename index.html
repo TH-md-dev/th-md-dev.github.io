@@ -37,7 +37,7 @@
             padding: 20px;
             background: #f9f9f9;
             border-radius: 8px;
-            max-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
         }
 
@@ -170,12 +170,12 @@
             .editor-section {
                 flex-direction: column;
             }
-            
+
             .controls {
                 flex: none;
                 width: auto;
             }
-            
+
             .preview {
                 width: auto;
             }
@@ -187,7 +187,7 @@
         <h1>賀卡編輯器<br>Greeting Card Editor</h1>
 
         <button class="btn" onclick="downloadJPG()">下載 JPG</button>
-        
+
         <div class="editor-section">
             <div class="controls">
                 <div class="form-group">
@@ -209,8 +209,7 @@
                     <button class="tab-button active" onclick="switchTab('recipient')">收件人</button>
                     <button class="tab-button" onclick="switchTab('sender')">寄件人</button>
                 </div>
-             </div>
-            
+
                 <div id="recipientControls">
                     <div class="form-group">
                         <label>收件人名稱</label>
@@ -255,7 +254,7 @@
                     </div>
                 </div>
             </div>
-            
+
                 <br>
 
                 <div class="form-group">
@@ -271,7 +270,8 @@
                         <input type="radio" id="circleShape" name="imageShape" value="circle" onchange="updateCard()">
                         <label for="circleShape">圓形</label>
                     </div>
-            
+                </div>
+
                 <div class="form-group">
                     <label>照片大小: <span id="imageSizeValue">100</span>px</label>
                     <input type="range" id="imageSize" min="50" max="300" value="100" oninput="updateSliderValue(this, 'imageSizeValue'); updateCard();">
@@ -308,7 +308,7 @@
         function switchTab(tab) {
             document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
             document.querySelector(`button[onclick="switchTab('${tab}')"]`).classList.add('active');
-            
+
             if (tab === 'recipient') {
                 document.getElementById('recipientControls').style.display = 'block';
                 document.getElementById('senderControls').style.display = 'none';
@@ -361,7 +361,7 @@
 
         function updateCard() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             if (cardImg.src) {
                 ctx.drawImage(cardImg, 0, 0);
             }
