@@ -7,7 +7,7 @@
     <title>賀卡編輯器</title>
     <style>
         body {
-            font-family: "berkshire swash", Palatino;
+            font-family: "Fahkwang Bold ", Palatino;
             margin: 0;
             padding: 20px;
             background-color: #00a3ad;
@@ -186,10 +186,10 @@
     <div class="container">
         <h1>賀卡編輯器<br>Greeting Card Editor</h1>
 
-        <div>
-    <button onclick="downloadImage('jpg')">下載 JPG</button>
-    <button onclick="downloadImage('gif')">下載 GIF</button>
-</div>
+
+    <button class="btn" onclick="downloadJPG()">下載 JPG</button>
+    <button class="btn" onclick="downloadGIF()">下載 GIF</button>
+ 
         
         <div class="editor-section">
             <div class="controls">
@@ -213,7 +213,7 @@
                     <button class="tab-button" onclick="switchTab('sender')">寄件人</button>
                 </div>
 
-                <div id="recipientControls" style= font-family: berkshire swash,>
+                <div id="recipientControls" style= font-family: Fahkwang Bold,>
                     <div class="form-group">
                         <label>收件人名稱</label>
                         <input type="text" id="recipient" onchange="updateCard()">
@@ -221,7 +221,7 @@
 
                     <div class="form-group">
                         <label>文字顏色</label>
-                        <input type="color" id="recipientColor" value="#936d3a" onchange="updateCard()">
+                        <input type="color" id="recipientColor" value="#f8cf8e" onchange="updateCard()">
                     </div>
 
                     <div class="form-group">
@@ -235,7 +235,7 @@
                     </div>
                 </div>
 
-                <div id="senderControls" style= font-family: berkshire swash,  "display: none;">
+                <div id="senderControls" style= font-family: Fahkwang Bold,  "display: none;">
                     <div class="form-group">
                         <label>寄件人名稱</label>
                         <input type="text" id="sender" onchange="updateCard()">
@@ -243,7 +243,7 @@
 
                     <div class="form-group">
                         <label>文字顏色</label>
-                        <input type="color" id="senderColor" value="#936d3a" onchange="updateCard()">
+                        <input type="color" id="senderColor" value="#f8cf8e" onchange="updateCard()">
                     </div>
 
                     <div class="form-group">
@@ -336,6 +336,28 @@
                 reader.readAsDataURL(file);
             }
         }
+        const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/gif'];
+    
+    if (file && allowedTypes.includes(file.type)) {
+        if (file.type === 'image/gif') {
+            
+            const gifPreview = document.createElement('img');
+            gifPreview.src = URL.createObjectURL(file);
+            gifPreview.onload = () => {
+                setBackgroundImage(gifPreview.src);
+               
+                URL.revokeObjectURL(gifPreview.src);
+            };
+        } else {
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setBackgroundImage(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
 
         function loadSenderImage() {
             const file = document.getElementById('senderImage').files[0];
@@ -367,6 +389,10 @@
             
             if (cardImg.src) {
                 ctx.drawImage(cardImg, 0, 0);
+            }
+
+            if (bgImg.src.includes('gif')) {
+                setTimeout(() => drawCard(), 50); 
             }
 
             const fontSize = document.getElementById('fontSize').value;
