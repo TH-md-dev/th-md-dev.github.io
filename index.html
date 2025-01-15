@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>賀卡編輯器</title>
-    <script src="http://themadcreator.github.io/gifler/assets/gifler.js"></script>
-    <style>
+    
         body {
             font-family: "Fahkwang Bold ", Palatino;
             margin: 0;
@@ -321,7 +320,8 @@
                 document.getElementById('senderControls').style.display = 'block';
             }
         }
-
+<script src="https://cdn.jsdelivr.net/npm/gifler@0.1.0/dist/gifler.min.js"></script>
+<script>
 <input type="file" id="cardImage" accept="image/*">
 <input type="text" id="audioLink" placeholder="输入音频链接">
 <canvas id="canvas"></canvas>
@@ -329,8 +329,6 @@
 <button id="pauseButton">暂停</button>
 <audio id="audio"></audio>
 
-<script src="https://cdn.jsdelivr.net/npm/gifler@0.1.0/dist/gifler.min.js"></script>
-<script>
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let isPlaying = false;
@@ -374,7 +372,6 @@ document.getElementById('pauseButton').addEventListener('click', function() {
 });
 
 document.getElementById('cardImage').addEventListener('change', loadCardImage);
-</script>
 
 
 
