@@ -186,13 +186,16 @@
     <div class="container">
         <h1>賀卡編輯器<br>Greeting Card Editor</h1>
 
-        <button class="btn" onclick="downloadJPG()">下載 JPG</button>
+        <div>
+    <button onclick="downloadImage('jpg')">下載 JPG</button>
+    <button onclick="downloadImage('gif')">下載 GIF</button>
+</div>
         
         <div class="editor-section">
             <div class="controls">
                 <div class="form-group">
                     <label>上傳賀卡背景</label>
-                    <input type="file" id="cardImage" accept="image/jpeg,image/jpg" onchange="loadCardImage()">
+                    <input type="file" id="cardImage" accept="image/jpeg,image/jpg,image/gif" onchange="loadCardImage()">
                 </div>
 
                 <div class="form-group">
@@ -396,12 +399,15 @@
             }
         }
 
-        function downloadJPG() {
-            const link = document.createElement('a');
-            link.download = 'Card.jpg';
-            link.href = canvas.toDataURL('image/jpeg', 1.0);
-            link.click();
-        }
+function downloadImage(format) {
+    const link = document.createElement('a');
+    const filename = `Card.${format.toLowerCase()}`;
+    const mimeType = format.toLowerCase() === 'gif' ? 'image/gif' : 'image/jpeg';
+    
+    link.download = filename;
+    link.href = canvas.toDataURL(mimeType, 1.0);
+    link.click();
+}
     </script>
 </body>
 </html>
