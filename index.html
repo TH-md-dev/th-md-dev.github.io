@@ -180,6 +180,39 @@
                 width: auto;
             }
         }
+   
+    .btn:hover {
+            background: #45a049;
+        }
+
+        .audio-controls {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        #audioPlayer {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* 其他原有樣式保持不變... */
+
+        @media (max-width: 800px) {
+            .editor-section {
+                flex-direction: column;
+            }
+            
+            .controls {
+                flex: none;
+                width: auto;
+            }
+            
+            .preview {
+                width: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -196,6 +229,16 @@
                 <div class="form-group">
                     <label>上傳賀卡背景</label>
                     <input type="file" id="cardImage" accept="image/jpeg,image/jpg,image/gif" onchange="loadCardImage()">
+                </div>
+
+                <!-- 背景音樂上傳 -->
+                <div class="form-group">
+                    <label>上傳背景音樂</label>
+                    <input type="file" id="audioInput" accept="audio/*">
+                    <div class="audio-controls">
+                        <audio id="audioPlayer" controls="">
+                        </audio>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -297,12 +340,55 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script>
-        const canvas = document.getElementById('canvas');
+        const canvas = document.getElementById('previewCanvas');
         const ctx = canvas.getContext('2d');
-        let cardImg = new Image();
-        let senderImg = new Image();
+        const previewImage = document.getElementById('previewImage');
+        const audioPlayer = document.getElementById('audioPlayer');
+        let backgroundImage = null;
+        let isGif = false;
+
+        // 處理背景圖片上傳
+        document.getElementById('backgroundInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            isGif = file.type === 'image/gif';
+            
+            if (isGif) {
+                previewImage.src = URL.createObjectURL(file);
+                canvas.style.display = 'none';
+                previewImage.style.display = 'block';
+            } else {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    backgroundImage = new Image();
+                    backgroundImage.onload = function() {
+                        canvas.style.display = 'block';
+                        previewImage.style.display = 'none';
+                        drawCanvas();
+                    };
+                    backgroundImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 處理音訊上傳
+        document.getElementById('audioInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const audioUrl = URL.createObjectURL(file);
+            audioPlayer.src = audioUrl;
+        });
+
+        function drawCanvas() {
+            if (!backgroundImage) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
         function updateSliderValue(slider, valueId) {
             document.getElementById(valueId).textContent = slider.value;
@@ -320,60 +406,6 @@
                 document.getElementById('senderControls').style.display = 'block';
             }
         }
-<script src="https://cdn.jsdelivr.net/npm/gifler@0.1.0/dist/gifler.min.js"></script>
-<script>
-<input type="file" id="cardImage" accept="image/*">
-<input type="text" id="audioLink" placeholder="输入音频链接">
-<canvas id="canvas"></canvas>
-<button id="playButton">播放</button>
-<button id="pauseButton">暂停</button>
-<audio id="audio"></audio>
-
-let canvas = document.getElementById('canvas');
-let ctx = canvas.getContext('2d');
-let isPlaying = false;
-let gifInstance;
-let audio = document.getElementById('audio');
-
-function loadCardImage() {
-    const file = document.getElementById('cardImage').files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            gifInstance = gifler(e.target.result).get();
-            gifInstance.animateInCanvas(canvas);
-        }
-        reader.readAsDataURL(file);
-    }
-}
-
-document.getElementById('playButton').addEventListener('click', function() {
-    const audioLink = document.getElementById('audioLink').value;
-    if (audioLink) {
-        audio.src = audioLink;
-    }
-    if (!isPlaying) {
-        isPlaying = true;
-        audio.play();
-        if (gifInstance) {
-            gifInstance.play();
-        }
-    }
-});
-
-document.getElementById('pauseButton').addEventListener('click', function() {
-    if (isPlaying) {
-        isPlaying = false;
-        audio.pause();
-        if (gifInstance) {
-            gifInstance.pause();
-        }
-    }
-});
-
-document.getElementById('cardImage').addEventListener('change', loadCardImage);
-
-
 
         function loadSenderImage() {
             const file = document.getElementById('senderImage').files[0];
@@ -413,7 +445,7 @@ document.getElementById('cardImage').addEventListener('change', loadCardImage);
 
             const fontSize = document.getElementById('fontSize').value;
             const isBold = document.getElementById('boldText').checked;
-            ctx.font = `${isBold ? 'bold' : ''} ${fontSize}px "Microsoft JhengHei"`;
+            ctx.font = `${isBold ? 'bold' : ''} ${fontSize}px "Fahkwang Bold"`;
 
             const recipient = document.getElementById('recipient').value;
             const recipientX = parseInt(document.getElementById('recipientX').value);
@@ -450,6 +482,15 @@ function downloadImage(format) {
     link.href = canvas.toDataURL(mimeType, 1.0);
     link.click();
 }
+// 添加即時更新功能
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (!isGif) {
+                    drawCanvas();
+                }
+            });
+        });
     </script>
 </body>
 </html>
