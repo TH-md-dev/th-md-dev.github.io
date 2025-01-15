@@ -321,24 +321,59 @@
             }
         }
 
-        function loadCardImage() {
+       <input type="file" id="cardImage" accept="image/*">
+<input type="text" id="audioLink" placeholder="输入音频链接">
+<canvas id="canvas"></canvas>
+<button id="playButton">播放</button>
+<button id="pauseButton">暂停</button>
+<audio id="audio"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/gifler@0.1.0/dist/gifler.min.js"></script>
+<script>
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+let isPlaying = false;
+let gifInstance;
+let audio = document.getElementById('audio');
+
+function loadCardImage() {
     const file = document.getElementById('cardImage').files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            createImageBitmap(file).then(function(bitmap) {
-                canvas.width = bitmap.width;
-                canvas.height = bitmap.height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(bitmap, 0, 0);
-                updateCard();
-            }).catch(function(error) {
-                console.error('Error loading image:', error);
-            });
+            gifInstance = gifler(e.target.result).get();
+            gifInstance.animateInCanvas(canvas);
         }
         reader.readAsDataURL(file);
     }
 }
+
+document.getElementById('playButton').addEventListener('click', function() {
+    const audioLink = document.getElementById('audioLink').value;
+    if (audioLink) {
+        audio.src = audioLink;
+    }
+    if (!isPlaying) {
+        isPlaying = true;
+        audio.play();
+        if (gifInstance) {
+            gifInstance.play();
+        }
+    }
+});
+
+document.getElementById('pauseButton').addEventListener('click', function() {
+    if (isPlaying) {
+        isPlaying = false;
+        audio.pause();
+        if (gifInstance) {
+            gifInstance.pause();
+        }
+    }
+});
+
+document.getElementById('cardImage').addEventListener('change', loadCardImage);
+</script>
 
 
 
