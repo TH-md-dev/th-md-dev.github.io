@@ -321,43 +321,61 @@
             }
         }
 
-        function loadCardImage() {
-            const file = document.getElementById('cardImage').files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    cardImg.onload = function() {
-                        canvas.width = cardImg.width;
-                        canvas.height = cardImg.height;
-                        updateCard();
-                    }
-                    cardImg.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
+        input type="file" id="cardImage" accept="image/*">
+<canvas id="canvas"></canvas>
+<button id="playButton">播放</button>
+<button id="pauseButton">暂停</button>
+
+<script>
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+let cardImg = new Image();
+let isPlaying = false;
+let animationFrameId;
+
+function loadCardImage() {
+    const file = document.getElementById('cardImage').files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            createImageBitmap(file).then(function(bitmap) {
+                canvas.width = bitmap.width;
+                canvas.height = bitmap.height;
+                ctx.drawImage(bitmap, 0, 0);
+                cardImg.src = e.target.result;
+                updateCard();
+            }).catch(function(error) {
+                console.error('Error loading image:', error);
+            });
         }
-        const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/gif'];
-    
-    if (file && allowedTypes.includes(file.type)) {
-        if (file.type === 'image/gif') {
-            
-            const gifPreview = document.createElement('img');
-            gifPreview.src = URL.createObjectURL(file);
-            gifPreview.onload = () => {
-                setBackgroundImage(gifPreview.src);
-               
-                URL.revokeObjectURL(gifPreview.src);
-            };
-        } else {
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setBackgroundImage(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
+        reader.readAsDataURL(file);
+    }
+}
+
+function updateCard() {
+    if (isPlaying) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(cardImg, 0, 0);
+        animationFrameId = requestAnimationFrame(updateCard);
+    }
+}
+
+document.getElementById('playButton').addEventListener('click', function() {
+    if (!isPlaying) {
+        isPlaying = true;
+        updateCard();
+    }
+});
+
+document.getElementById('pauseButton').addEventListener('click', function() {
+    if (isPlaying) {
+        isPlaying = false;
+        cancelAnimationFrame(animationFrameId);
+    }
+});
+
+document.getElementById('cardImage').addEventListener('change', loadCardImage);
+</script>
 
         function loadSenderImage() {
             const file = document.getElementById('senderImage').files[0];
